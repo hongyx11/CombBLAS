@@ -23,6 +23,12 @@
 #include "CombBLAS/CombBLAS.h"
 #include "../CC.h"
 
+double cblas_alltoalltime;
+double cblas_allgathertime;
+double cblas_mergeconttime;
+double cblas_transvectime;
+double cblas_localspmvtime;
+
 using namespace std;
 using namespace combblas;
 
