@@ -15,7 +15,9 @@
 #endif
 #include <inttypes.h>
 #include <stdio.h>
-#include <omp.h>
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 
 #include "make_graph.h"
 

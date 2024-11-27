@@ -23,10 +23,8 @@ target_include_directories(CombBLAS PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOU
 target_include_directories(CombBLAS PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/psort-1.0/include> $<INSTALL_INTERFACE:include>)
 target_include_directories(CombBLAS PRIVATE include/CombBLAS)
 
-# MPI and OpenMP dependencies
+# MPI dependencies
 find_package(MPI REQUIRED)
-find_package(OpenMP)
-
 if(TARGET MPI::MPI_CXX) # Use target if available (CMake >= 3.9)
   target_link_libraries(CombBLAS PUBLIC MPI::MPI_CXX)
 else()
@@ -35,14 +33,20 @@ else()
   target_include_directories(CombBLAS PUBLIC "${MPI_CXX_INCLUDE_PATH}")
 endif()
 
-if(TARGET OpenMP::OpenMP_CXX) # Use target if available (CMake >= 3.9)
-  target_compile_definitions(CombBLAS PUBLIC THREADED)
-  target_link_libraries(CombBLAS PUBLIC OpenMP::OpenMP_CXX)
-elseif(OPENMP_FOUND)
-  target_compile_definitions(CombBLAS PUBLIC THREADED)
-  target_compile_options(CombBLAS PUBLIC "${OpenMP_CXX_FLAGS}")
-  target_link_libraries(CombBLAS PUBLIC "${OpenMP_CXX_FLAGS}")
-endif()
+# OpenMP dependencies
+option(USE_OPENMP "Use OpenMP for parallelism" ON)
+if(USE_OPENMP)
+    find_package(OpenMP)
+    if(TARGET OpenMP::OpenMP_CXX) # Use target if available (CMake >= 3.9)
+    target_compile_definitions(CombBLAS PUBLIC THREADED)
+    target_link_libraries(CombBLAS PUBLIC OpenMP::OpenMP_CXX)
+    else()
+    target_compile_definitions(CombBLAS PUBLIC THREADED)
+    target_compile_options(CombBLAS PUBLIC "${OpenMP_CXX_FLAGS}")
+    target_link_libraries(CombBLAS PUBLIC "${OpenMP_CXX_FLAGS}")
+    endif()
+endif(USE_OPENMP)
+
 
 add_subdirectory(usort)
 target_link_libraries(CombBLAS PUBLIC Usortlib)

@@ -6,7 +6,9 @@
 #include <algorithm>
 #include <string.h>
 #include <assert.h>
-#include <omp.h>
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 #include <map>
 using namespace std;
 

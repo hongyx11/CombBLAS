@@ -47,7 +47,9 @@
 #define _COMMS_H_
 
 #include <mpi.h>
-#include <omp.h>
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>

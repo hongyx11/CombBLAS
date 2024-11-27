@@ -6,7 +6,9 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
-#include <omp.h>
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 #include <sstream>
 
 

@@ -837,7 +837,7 @@ SpTuples<IT, NT>* MultiwayMerge( std::vector<SpTuples<IT,NT> *> & ArrSpTups, IT 
 #endif
         {
             std::vector<NT> globalHashVec(minHashTableSize);
-            size_t tid = omp_get_thread_num();
+            // size_t tid = omp_get_thread_num();
 #ifdef THREADED
 #pragma omp for schedule(dynamic)
 #endif
@@ -1017,7 +1017,7 @@ SpTuples<IT, NT>* MultiwayMerge( std::vector<SpTuples<IT,NT> *> & ArrSpTups, IT 
 #endif
         {
             std::vector< std::pair<uint32_t,NT> > globalHashVec(minHashTableSize);
-            size_t tid = omp_get_thread_num();
+            // size_t tid = omp_get_thread_num();
 #ifdef THREADED
 #pragma omp for schedule(dynamic)
 #endif

@@ -1,5 +1,7 @@
 #include <petscmat.h>
-#include "omp.h"
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 
 static char help[] = "help yourself!";
 

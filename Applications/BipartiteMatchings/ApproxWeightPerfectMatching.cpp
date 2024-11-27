@@ -1,11 +1,11 @@
 
 #ifdef THREADED
-#ifndef _OPENMP
-#define _OPENMP
-#endif
+    #ifndef _OPENMP
+    #define _OPENMP
+    #endif
 
-#include <omp.h>
-int cblas_splits = 1;
+    #include <omp.h>
+    int cblas_splits = 1;
 #endif
 
 #include "CombBLAS/CombBLAS.h"

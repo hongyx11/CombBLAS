@@ -961,10 +961,10 @@ estimateNNZ_sampling(
 	int nthds = 1;
 	#ifdef THREADED
 	#pragma omp parallel
-	#endif
 	{
 		nthds = omp_get_num_threads();
-	}	
+	}
+    #endif
 
 	#ifdef THREADED
 	#pragma omp parallel

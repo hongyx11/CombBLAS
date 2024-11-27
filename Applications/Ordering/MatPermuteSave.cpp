@@ -1,10 +1,10 @@
 #define DETERMINISTIC 1
 
 #ifdef THREADED
-#ifndef _OPENMP
-#define _OPENMP // should be defined before any COMBBLAS header is included
-#endif
-#include <omp.h>
+    #ifndef _OPENMP
+    #define _OPENMP // should be defined before any COMBBLAS header is included
+    #endif
+    #include <omp.h>
 #endif
 
 #include "CombBLAS/CombBLAS.h"

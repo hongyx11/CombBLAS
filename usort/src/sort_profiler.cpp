@@ -4,7 +4,9 @@
 #include <papi.h>
 #endif
 
-#include <omp.h>
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 
 sort_profiler_t 				total_sort;
 

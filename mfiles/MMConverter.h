@@ -6,10 +6,12 @@
 #include <algorithm>
 #include <numeric>
 #include <iterator>
-#include <omp.h>
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 #include <sys/stat.h>
 #include <string.h>
-#include <omp.h>
+
 #include "mmio.h"
 #include <zlib.h>
 #include "Tommy/tommyhashdyn.h"

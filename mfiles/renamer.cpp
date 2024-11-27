@@ -13,7 +13,9 @@
 #include <cstdlib>
 #include <cstdio>
 #include <limits>
-#include <omp.h>
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 
 using namespace std;
 

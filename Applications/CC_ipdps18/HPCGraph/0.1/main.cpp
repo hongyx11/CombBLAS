@@ -44,7 +44,9 @@
 */
 
 #include <mpi.h>
-#include <omp.h>
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
 #include <time.h>
 #include <getopt.h>
 #include <string.h>

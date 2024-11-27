@@ -5,11 +5,28 @@ target_include_directories(Usortlib PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOU
 target_include_directories(Usortlib PRIVATE include/usort)
 
 if(TARGET MPI::MPI_CXX) # Use target if available (CMake >= 3.9)
-  target_link_libraries(Usortlib PUBLIC MPI::MPI_CXX)
-else()
-  target_compile_options(Usortlib PUBLIC "${MPI_CXX_COMPILE_FLAGS}")
-  target_link_libraries(Usortlib PUBLIC "${MPI_CXX_LIBRARIES}" "${MPI_CXX_LINKFLAGS}")
-  target_include_directories(Usortlib PUBLIC "${MPI_CXX_INCLUDE_PATH}")
+    target_link_libraries(Usortlib PUBLIC MPI::MPI_CXX)
+elseif(MPI_FOUND)
+    target_compile_options(Usortlib PUBLIC "${MPI_CXX_COMPILE_FLAGS}")
+    target_link_libraries(Usortlib PUBLIC "${MPI_CXX_LIBRARIES}" "${MPI_CXX_LINKFLAGS}")
+    target_include_directories(Usortlib PUBLIC "${MPI_CXX_INCLUDE_PATH}")
+endif()
+
+
+# link to OpenMP Locally
+find_package(OpenMP)
+# if(TARGET OpenMP::OpenMP_CXX) # Use target if available (CMake >= 3.9)
+#     target_link_libraries(Usortlib PUBLIC OpenMP::OpenMP_CXX)
+# else()
+#     target_compile_options(Usortlib PUBLIC "${OpenMP_CXX_FLAGS}")
+#     target_link_libraries(Usortlib PUBLIC "${OpenMP_CXX_FLAGS}")
+# endif()
+
+if(TARGET OpenMP::OpenMP_CXX) # Use target if available (CMake >= 3.9)
+    target_link_libraries(Usortlib PRIVATE OpenMP::OpenMP_CXX)
+    else()
+    target_compile_options(Usortlib PRIVATE "${OpenMP_CXX_FLAGS}")
+    target_link_libraries(Usortlib PRIVATE "${OpenMP_CXX_FLAGS}")
 endif()
 
 install(DIRECTORY include/ DESTINATION include)

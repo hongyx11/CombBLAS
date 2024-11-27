@@ -3264,10 +3264,10 @@ EstPerProcessNnzSpMV(
 	int nthds = 1;
 	#ifdef THREADED
 	#pragma omp parallel
-	#endif
 	{
 		nthds = omp_get_num_threads();
 	}
+    #endif
 
 	if (myrank == 0)
 		std::cout << "taking transposes." << std::endl;
