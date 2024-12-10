@@ -61,4 +61,4 @@ jobs:
             wget -P ${{ steps.strings.outputs.build-output-dir }} http://eecs.berkeley.edu/~aydin/CombBLAS_FILES/testdata_combblas1.6.1.tgz
             tar ${{ steps.strings.outputs.build-output-dir }}/testdata_combblas1.6.1.tgz -C ${{ steps.strings.outputs.build-output-dir }}
       - name: Run ReleaseTest
-        run: > OMP_NUM_THREADS=1 ctest -V
+        run: OMP_NUM_THREADS=1 ctest -V
