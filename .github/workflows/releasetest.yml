@@ -54,11 +54,11 @@ jobs:
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           -S ${{ github.workspace }}
-      - name: Build
+      - name: compile
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} -j 
       - name: download test data
         run: wget -P ${{ steps.strings.outputs.build-output-dir }} http://eecs.berkeley.edu/~aydin/CombBLAS_FILES/testdata_combblas1.6.1.tgz
       - name: untar the data
         run: tar -xzvf ${{ steps.strings.outputs.build-output-dir }}/testdata_combblas1.6.1.tgz -C ${{ steps.strings.outputs.build-output-dir }}
       - name: run releaserest
-        run: OMP_NUM_THREADS=1 ctest -V
+        run: cd ${{ steps.strings.outputs.build-output-dir }} && OMP_NUM_THREADS=1 ctest -V
