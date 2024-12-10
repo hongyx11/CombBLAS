@@ -61,4 +61,4 @@ jobs:
       - name: untar the data
         run: tar -xzvf ${{ steps.strings.outputs.build-output-dir }}/testdata_combblas1.6.1.tgz -C ${{ steps.strings.outputs.build-output-dir }}
       - name: run releaserest
-        run: cd ${{ steps.strings.outputs.build-output-dir }} && OMP_NUM_THREADS=1 ctest -V
+        run: cd ${{ steps.strings.outputs.build-output-dir }}/ReleaseTests && OMP_NUM_THREADS=1 ctest -V
