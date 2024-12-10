@@ -1,0 +1,66 @@
+name: CombBLAS
+
+on:
+  push:
+    branches:
+      - master
+      - workflow
+  pull_request:
+    branches:
+      - master
+      - workflow
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        build_type: [Release]
+        c_compiler: [mpicc]
+        cxx_compiler: [mpic++]
+        mpi: ['mpich']
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set reusable strings
+        # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+      - name: Setup MPI
+        uses: mpi4py/setup-mpi@v1
+        with:
+          mpi: ${{ matrix.mpi }}
+      - name: Show MPI name
+        run:  echo "${{ steps.setup-mpi.outputs.mpi }}"
+
+      - name: Show MPI info
+        run:  mpichversion
+        if:   ${{ matrix.mpi == 'mpich' }}
+
+      - name: Show MPI info
+        run:  ompi_info
+        if:   ${{ matrix.mpi == 'openmpi' }}
+
+      - name: Show MPI info
+        run:  impi_info
+        if:   ${{ matrix.mpi == 'intelmpi' }}
+
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }}
+          -DCMAKE_CXX_COMPILER=${{ matrix.cxx_compiler }}
+          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -S ${{ github.workspace }}
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+      - name: Download Test Data
+        run: >
+            wget -P ${{ steps.strings.outputs.build-output-dir }} http://eecs.berkeley.edu/~aydin/CombBLAS_FILES/testdata_combblas1.6.1.tgz
+            tar ${{ steps.strings.outputs.build-output-dir }}/testdata_combblas1.6.1.tgz -C ${{ steps.strings.outputs.build-output-dir }}
+      - name: Run ReleaseTest
+        run: > OMP_NUM_THREADS=1 ctest -V
