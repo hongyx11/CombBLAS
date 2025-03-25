@@ -1,0 +1,47 @@
+CompileFlags:
+    Compiler: /usr/local/cuda/bin/nvcc
+    Add: [
+        --cuda-gpu-arch=sm_80,
+        -DUSE_CUDA,
+        -D__CUDACC__,
+        -I/home/exouser/mpichinstall/include,
+        -I/media/volume/workspace/kk/combblas-yuximain/include,
+        -I/media/volume/workspace/kk/combblas-yuximain/psort-1.0/include,
+        -I/media/volume/workspace/kk/combblas-yuximain/usort/include,
+        -I/media/volume/workspace/kk/combblas-yuximain/graph500-1.2/generator/include,
+        -I/usr/local/cuda/include,
+        -I/usr/include/c++/11,
+        -I/usr/include/x86_64-linux-gnu/c++/11,
+        -xcuda,
+    ]
+    Remove:
+        # strip CUDA fatbin args
+        - "-Xfatbin*"
+        # strip CUDA arch flags
+        - "-gencode*"
+        - "--generate-code*"
+        # strip CUDA flags unknown to clang
+        - "-ccbin*"
+        - "--compiler-options*"
+        - "--expt-extended-lambda"
+        - "--expt-relaxed-constexpr"
+        - "-forward-unknown-to-host-compiler"
+        - "-Werror=cross-execution-space-call"
+        - "--options-file"
+        - "-Xcompiler=*"
+        - "-Xcudafe"
+        - "--diag-suppress=1650"
+        - "--diag-suppress=128"
+        - "-compress-all"
+        - "--threads"
+
+Hover:
+  ShowAKA: No
+InlayHints:
+  Enabled: No
+Diagnostics:
+  Suppress:
+    - "variadic_device_fn"
+    - "attributes_not_allowed"
+    - "pp_including_mainfile_in_preamble"
+  UnusedIncludes: 'None'

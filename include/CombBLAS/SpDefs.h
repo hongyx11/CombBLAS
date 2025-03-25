@@ -45,13 +45,15 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-#include <cmath>
-#include <limits.h>
-#include "SequenceHeaps/knheap.C"
-#include "psort/psort.h"
-#include "psort/psort_samplesort.h"
-#include "psort/MersenneTwister.h"
-#include "CommGrid.h"
+// The definitions file should not include any headers.
+
+// #include <cmath>
+// #include <limits.h>
+// #include "SequenceHeaps/knheap.C"
+// #include "psort/psort.h"
+// #include "psort/psort_samplesort.h"
+// #include "psort/MersenneTwister.h"
+// #include "CommGrid.h"
 
 extern int cblas_splits; // TODO: move this inside namespace
 

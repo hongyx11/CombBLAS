@@ -30,6 +30,7 @@
 #ifndef _PRE_ALLOCATED_SPA_H
 #define _PRE_ALLOCATED_SPA_H
 #include "BitMap.h"
+#include <algorithm>
 
 namespace combblas {
 

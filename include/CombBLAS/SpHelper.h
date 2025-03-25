@@ -44,6 +44,9 @@
 #include "SpImpl.h"
 #include "hash.hpp"
 
+#include <iostream>
+
+
 namespace combblas {
 
 template <class IT, class NT>

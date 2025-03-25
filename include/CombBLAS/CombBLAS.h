@@ -73,33 +73,33 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 //#pragma warning( disable : 4244 ) // conversion from 'int64_t' to 'double', possible loss of data
 //#endif
 
-extern int cblas_splits;
-extern double cblas_alltoalltime;
-extern double cblas_allgathertime;
-extern double cblas_localspmvtime;
-extern double cblas_mergeconttime;
-extern double cblas_transvectime;
+// extern int cblas_splits;
+// extern double cblas_alltoalltime;
+// extern double cblas_allgathertime;
+// extern double cblas_localspmvtime;
+// extern double cblas_mergeconttime;
+// extern double cblas_transvectime;
 
 
-extern double mcl_Abcasttime;
-extern double mcl_Bbcasttime;
-extern double mcl_localspgemmtime;
-extern double mcl_multiwaymergetime;
-extern double mcl_kselecttime;
-extern double mcl_prunecolumntime;
-extern double mcl_symbolictime;
+// extern double mcl_Abcasttime;
+// extern double mcl_Bbcasttime;
+// extern double mcl_localspgemmtime;
+// extern double mcl_multiwaymergetime;
+// extern double mcl_kselecttime;
+// extern double mcl_prunecolumntime;
+// extern double mcl_symbolictime;
 
 
-extern double mcl3d_conversiontime;
-extern double mcl3d_symbolictime;
-extern double mcl3d_Abcasttime;
-extern double mcl3d_Bbcasttime;
-extern double mcl3d_SUMMAtime;
-extern double mcl3d_localspgemmtime;
-extern double mcl3d_SUMMAmergetime;
-extern double mcl3d_reductiontime;
-extern double mcl3d_3dmergetime;
-extern double mcl3d_kselecttime;
+// extern double mcl3d_conversiontime;
+// extern double mcl3d_symbolictime;
+// extern double mcl3d_Abcasttime;
+// extern double mcl3d_Bbcasttime;
+// extern double mcl3d_SUMMAtime;
+// extern double mcl3d_localspgemmtime;
+// extern double mcl3d_SUMMAmergetime;
+// extern double mcl3d_reductiontime;
+// extern double mcl3d_3dmergetime;
+// extern double mcl3d_kselecttime;
 
 // An adapter function that allows using extended-callback EWiseApply with plain-old binary functions that don't want the extra parameters.
 template <typename RETT, typename NU1, typename NU2, typename BINOP>

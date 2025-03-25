@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.20)
 project(CombBLAS VERSION 2.0.1 LANGUAGES C CXX)
 
 # require c++14
@@ -8,33 +8,45 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #set(CMAKE_BUILD_TYPE Debug)
 
 # Main CombBLAS library
-add_library(CombBLAS src/CommGrid.cpp src/mmio.c src/MPIType.cpp src/MPIOp.cpp src/MemoryPool.cpp src/hash.cpp)
+set(SOURCE_FILES "")
+file(GLOB TMP "src/*.c")
+list(APPEND SOURCE_FILES ${TMP})
+file(GLOB TMP "src/*.cpp")
+list(APPEND SOURCE_FILES ${TMP})
+file(GLOB TMP "include/CombBLAS/*.h")
+list(APPEND SOURCE_FILES ${TMP})
+file(GLOB TMP "include/CombBLAS/*.hpp")
+list(APPEND SOURCE_FILES ${TMP})
 
-# require c++14 in CombBLAS interface
-if("cxx_std_14" IN_LIST CMAKE_CXX_COMPILE_FEATURES) # Use language feature if available (CMake >= 3.8)
-  target_compile_features(CombBLAS PUBLIC cxx_std_14)
-else()
-  # Use C++14-specific features for CMake >= 3.3, which will force the appropriate language level flags.
-  target_compile_features(CombBLAS PUBLIC cxx_return_type_deduction)
-endif()
+add_library(CombBLAS ${SOURCE_FILES})
+
+# # require c++14 in CombBLAS interface
+# if("cxx_std_14" IN_LIST CMAKE_CXX_COMPILE_FEATURES) # Use language feature if available (CMake >= 3.8)
+#   target_compile_features(CombBLAS PUBLIC cxx_std_14)
+# else()
+#   # Use C++14-specific features for CMake >= 3.3, which will force the appropriate language level flags.
+#   target_compile_features(CombBLAS PUBLIC cxx_return_type_deduction)
+# endif()
 
 # set include directories
 target_include_directories(CombBLAS PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_include_directories(CombBLAS PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Applications> $<INSTALL_INTERFACE:include>)
 target_include_directories(CombBLAS PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/psort-1.0/include> $<INSTALL_INTERFACE:include>)
 target_include_directories(CombBLAS PRIVATE include/CombBLAS)
 
+
 # MPI and OpenMP dependencies
 find_package(MPI REQUIRED)
-find_package(OpenMP)
-
 if(TARGET MPI::MPI_CXX) # Use target if available (CMake >= 3.9)
-  target_link_libraries(CombBLAS PUBLIC MPI::MPI_CXX)
+    target_link_libraries(CombBLAS PUBLIC MPI::MPI_CXX)
 else()
-  target_compile_options(CombBLAS PUBLIC "${MPI_CXX_COMPILE_FLAGS}")
-  target_link_libraries(CombBLAS PUBLIC "${MPI_CXX_LIBRARIES}" "${MPI_CXX_LINKFLAGS}")
-  target_include_directories(CombBLAS PUBLIC "${MPI_CXX_INCLUDE_PATH}")
+    target_compile_options(CombBLAS PUBLIC "${MPI_CXX_COMPILE_FLAGS}")
+    target_link_libraries(CombBLAS PUBLIC "${MPI_CXX_LIBRARIES}" "${MPI_CXX_LINKFLAGS}")
+    target_include_directories(CombBLAS PUBLIC "${MPI_CXX_INCLUDE_PATH}")
 endif()
 
+
+find_package(OpenMP)
 if(TARGET OpenMP::OpenMP_CXX) # Use target if available (CMake >= 3.9)
   target_compile_definitions(CombBLAS PUBLIC THREADED)
   target_link_libraries(CombBLAS PUBLIC OpenMP::OpenMP_CXX)
@@ -118,8 +130,8 @@ include(CTest)
 
 add_subdirectory(ReleaseTests)
 add_subdirectory(Applications)
-add_subdirectory(Applications/Ordering)
-add_subdirectory(Applications/BipartiteMatchings)
-add_subdirectory(Applications/SpMSpV-IPDPS2017)
-add_subdirectory(Applications/Incremental)
+# add_subdirectory(Applications/Ordering)
+# add_subdirectory(Applications/BipartiteMatchings)
+# add_subdirectory(Applications/SpMSpV-IPDPS2017)
+# add_subdirectory(Applications/Incremental)
 add_subdirectory(3DSpGEMM)

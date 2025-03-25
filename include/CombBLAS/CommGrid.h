@@ -37,6 +37,7 @@
 #include <string>
 #include <fstream>
 #include <stdint.h>
+#include <memory>
 #include "MPIType.h"
 
 namespace combblas {

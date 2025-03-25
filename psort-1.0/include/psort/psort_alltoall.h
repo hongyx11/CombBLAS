@@ -23,7 +23,10 @@ THE SOFTWARE.
 #ifndef PSORT_ALLTOALL_H
 #define PSORT_ALLTOALL_H
 
+#include <climits>
+
 #include "psort_util.h"
+
 
 namespace vpsort {  
   using namespace std;

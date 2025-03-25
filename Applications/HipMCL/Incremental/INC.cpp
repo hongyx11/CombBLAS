@@ -13,19 +13,20 @@
 #include "CombBLAS/CombBLAS.h"
 #include "CombBLAS/CommGrid3D.h"
 #include "CombBLAS/ParFriends.h"
-#include "../CC.h"
-#include "../WriteMCLClusters.h"
+
+#include "ConnectedComponent/CC.h"
+
+#include "HipMCL/MCLHelper.h"
+#include "HipMCL/WriteMCLClusters.h"
+
 #include "IncClust.h"
+#include "IncrementalHelper.h"
 
 using namespace std;
 using namespace combblas;
 
 
-#ifdef _OPENMP
-int cblas_splits = omp_get_max_threads();
-#else
-int cblas_splits = 1;
-#endif
+
 
 typedef int64_t IT;
 typedef double NT;

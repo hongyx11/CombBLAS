@@ -46,7 +46,10 @@
 #include <ctime>
 #include <cmath>
 #include "CombBLAS/CombBLAS.h"
-#include "CC.h"
+
+#include "ConnectedComponent/CC.h"
+
+#include "MCLHelper.h"
 #include "WriteMCLClusters.h"
 
 using namespace std;

@@ -31,6 +31,9 @@
 #include "SpParHelper.h"
 #include "PBBS/radixSort.h"
 #include "Tommy/tommyhashdyn.h"
+#include "HeapEntry.h"
+#include "SequenceHeaps/knheap.C"
+
 
 namespace combblas {
 
