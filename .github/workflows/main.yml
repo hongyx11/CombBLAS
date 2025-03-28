@@ -1,0 +1,14 @@
+name: Manual Trigger Example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run a script
+        run: echo "Hello, this is a manually triggered workflow!"
