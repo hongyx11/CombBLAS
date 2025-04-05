@@ -1,0 +1,14 @@
+name: ReleaseTests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run a script
+        run: $(which cmake)
