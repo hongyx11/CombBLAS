@@ -9,10 +9,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Print checked code
+      - name: Print checked code and check environments
         run: |
           ls -lah
           echo $(pwd)
-
-      - name: Run a script
-        run: echo "hello world!"
+          echo $(which cmake)
+      - name: Run Cmake Configuration
+        run: cmake -S . -B build 
+      - name: Build MultTiming 
+        run: cmake --build build --target MultTiming -j
+        
