@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  ReleaseTests-MultTiming:
     runs-on: self-hosted
     steps:
       - name: Checkout code
@@ -18,31 +18,14 @@ jobs:
         run: cmake -S . -B build 
       - name: Build MultTiming 
         run: cmake --build build --target MultTiming -j
-      - name: Upload MultTiming binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: MultTiming-binary
-          path: build/ReleaseTests/MultTiming
-        
-  benchmark:
-      needs: build   # waits for build to finish
-      runs-on: self-hosted
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-        - name: Download MultTiming binary
-          uses: actions/download-artifact@v4
-          with:
-            name: MultTiming-binary
-            path: build/ReleaseTests
-        - name: Run MultTiming benchmark
-          env:
-            OMP_NUM_THREADS: 16
-          run: |
-            chmod +x ./build/ReleaseTests/MultTiming
-            srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores \
-            -q interactive -C gpu --gpus 4 --account=m4293_g \
-            ./build/ReleaseTests/MultTiming \
-            /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx \
-            /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx
+      - name: Run MultTiming 
+        env:
+          OMP_NUM_THREADS: 16
+        run: |
+          chmod +x ./build/ReleaseTests/MultTiming
+          srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores \
+          -q interactive -C gpu --gpus 4 --account=m4293_g \
+          ./build/ReleaseTests/MultTiming \
+          /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx \
+          /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx
             
