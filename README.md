@@ -1,3 +1,5 @@
+![Release Tests Status](https://github.com/hongyx11/CombBLAS/actions/workflows/main.yml/badge.svg)
+
 * This is the development repository of Combinatorial BLAS. 
 
 **Copyright** 
