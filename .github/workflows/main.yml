@@ -19,7 +19,7 @@ jobs:
       - name: Build MultTiming 
         run: cmake --build build --target MultTiming -j
       - name: Upload MultTiming binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: MultTiming-binary
           path: build/ReleaseTests/MultTiming
@@ -31,7 +31,7 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v3
         - name: Download MultTiming binary
-          uses: actions/download-artifact@v3
+          uses: actions/download-artifact@v4
           with:
             name: MultTiming-binary
             path: build/ReleaseTests
