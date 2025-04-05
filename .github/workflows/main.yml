@@ -18,6 +18,11 @@ jobs:
         run: cmake -S . -B build 
       - name: Build MultTiming 
         run: cmake --build build --target MultTiming -j
+      - name: Upload MultTiming binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: MultTiming-binary
+          path: build/ReleaseTests/MultTiming
         
   benchmark:
       needs: build   # waits for build to finish
@@ -25,7 +30,11 @@ jobs:
       steps:
         - name: Checkout code
           uses: actions/checkout@v3
-  
+        - name: Download MultTiming binary
+          uses: actions/download-artifact@v3
+          with:
+            name: MultTiming-binary
+            path: build/ReleaseTests
         - name: Run MultTiming benchmark
           env:
             OMP_NUM_THREADS: 16
