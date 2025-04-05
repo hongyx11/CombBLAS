@@ -19,3 +19,19 @@ jobs:
       - name: Build MultTiming 
         run: cmake --build build --target MultTiming -j
         
+  benchmark:
+      needs: build   # waits for build to finish
+      runs-on: self-hosted
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+  
+        - name: Run MultTiming benchmark
+          env:
+            NUM_THREADS: 8
+            MATRIX_SIZE: 4096
+          run: |
+            srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores \
+            -q interactive -C gpu --gpus 4 --account=m4293_g \
+            ./build/ReleaseTests/MultTiming $DLOC/bcsstk32/bcsstk32.mtx $DLOC/bcsstk32/bcsstk32.mtx
+            
