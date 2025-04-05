@@ -11,4 +11,4 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run a script
-        run: echo "Hello, this is a manually triggered workflow!"
+        run: echo $(which cmake)
