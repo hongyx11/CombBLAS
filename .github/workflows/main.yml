@@ -28,8 +28,7 @@ jobs:
   
         - name: Run MultTiming benchmark
           env:
-            NUM_THREADS: 8
-            MATRIX_SIZE: 4096
+            OMP_NUM_THREADS: 16
           run: |
             srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores \
             -q interactive -C gpu --gpus 4 --account=m4293_g \
