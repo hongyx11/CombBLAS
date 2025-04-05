@@ -1,4 +1,4 @@
-name: Manual Trigger Example
+name: Release Tests
 
 on:
   workflow_dispatch:
@@ -9,6 +9,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Print checked code
+        run: |
+          ls -lah
+          echo $(pwd)
 
       - name: Run a script
-        run: echo $DLOC
+        run: echo "hello world!"
