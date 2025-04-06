@@ -1,4 +1,4 @@
-name: Release Tests
+name: All Release Tests
 
 on:
   workflow_dispatch:
