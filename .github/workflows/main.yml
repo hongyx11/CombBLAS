@@ -23,7 +23,7 @@ jobs:
           OMP_NUM_THREADS: 16
         run:
           srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores \
-          -q interactive -C gpu --gpus 4 --account=m4293_g \
+          -q interactive -C cpu --account=m4293_g \
           ./build/ReleaseTests/MultTiming \
           /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx \
           /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx
@@ -47,7 +47,7 @@ jobs:
           OMP_NUM_THREADS: 16
         run:
           srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores \
-          -q interactive -C gpu --gpus 4 --account=m4293_g \
+          -q interactive -C cpu --account=m4293_g \
           ./build/ReleaseTests/MultTest \
           /pscratch/sd/y/yuxihong/workspace/datasets/TESTDATA/rmat_scale16_A.mtx \
           /pscratch/sd/y/yuxihong/workspace/datasets/TESTDATA/rmat_scale16_B.mtx \
