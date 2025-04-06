@@ -21,11 +21,37 @@ jobs:
       - name: Run MultTiming 
         env:
           OMP_NUM_THREADS: 16
-        run: |
-          chmod +x ./build/ReleaseTests/MultTiming
+        run:
           srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores \
           -q interactive -C gpu --gpus 4 --account=m4293_g \
           ./build/ReleaseTests/MultTiming \
           /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx \
           /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx
-            
+    
+  ReleaseTests-MultTest:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Print checked code and check environments
+        run: |
+          ls -lah
+          echo $(pwd)
+          echo $(which cmake)
+      - name: Run Cmake Configuration
+        run: cmake -S . -B build 
+      - name: Build MultTest 
+        run: cmake --build build --target MultTest -j
+      - name: Run MultTest 
+        env:
+          OMP_NUM_THREADS: 16
+        run:
+          srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores \
+          -q interactive -C gpu --gpus 4 --account=m4293_g \
+          ./build/ReleaseTests/MultTest \
+          /pscratch/sd/y/yuxihong/workspace/datasets/TESTDATA/rmat_scale16_A.mtx \
+          /pscratch/sd/y/yuxihong/workspace/datasets/TESTDATA/rmat_scale16_B.mtx \
+          /pscratch/sd/y/yuxihong/workspace/datasets/TESTDATA/rmat_scale16_productAB.mtx \
+          /pscratch/sd/y/yuxihong/workspace/datasets/TESTDATA/x_65536_halfdense.txt \
+          /pscratch/sd/y/yuxihong/workspace/datasets/TESTDATA/y_65536_halfdense.txt
+
