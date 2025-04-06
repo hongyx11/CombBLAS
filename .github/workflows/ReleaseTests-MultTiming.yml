@@ -18,11 +18,19 @@ jobs:
         run: cmake -S . -B build 
       - name: Build MultTiming 
         run: cmake --build build --target MultTiming -j
-      - name: Run MultTiming 
+      - name: Run MultTiming - OMP 32
         env:
           OMP_NUM_THREADS: 32
         run: |
           srun -t 00:30:00 -N 1 -n 4 -c 64 --cpu-bind=cores -q interactive -C cpu --account=m4293 \
+          ./build/ReleaseTests/MultTiming \
+          /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx \
+          /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx
+      - name: Run MultTiming - OMP 16
+        env:
+          OMP_NUM_THREADS: 16
+        run: |
+          srun -t 00:30:00 -N 1 -n 4 -c 32 --cpu-bind=cores -q interactive -C cpu --account=m4293 \
           ./build/ReleaseTests/MultTiming \
           /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx \
           /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx
