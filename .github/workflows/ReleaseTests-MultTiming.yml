@@ -21,7 +21,7 @@ jobs:
       - name: Run MultTiming 
         env:
           OMP_NUM_THREADS: 32
-        run:
+        run: |
           srun -t 00:30:00 -N 1 -n 4 -c 64 --cpu-bind=cores -q interactive -C cpu --account=m4293 \
           ./build/ReleaseTests/MultTiming \
           /pscratch/sd/y/yuxihong/workspace/datasets/bcsstk32/bcsstk32.mtx \
